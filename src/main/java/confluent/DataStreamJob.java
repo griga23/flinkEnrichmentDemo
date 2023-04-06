@@ -20,26 +20,16 @@ package confluent;
 
 import confluent.records.*;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
-import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.functions.MapFunction;
-import org.apache.flink.api.common.functions.Partitioner;
-import org.apache.flink.api.common.typeinfo.TypeInformation;
-import org.apache.flink.api.common.typeinfo.Types;
-import org.apache.flink.connector.base.DeliveryGuarantee;
 import org.apache.flink.connector.file.src.FileSource;
 import org.apache.flink.connector.kafka.sink.KafkaSink;
 import org.apache.flink.connector.kafka.source.KafkaSource;
 import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsInitializer;
 import org.apache.flink.core.fs.Path;
 import org.apache.flink.formats.csv.CsvReaderFormat;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.dataformat.csv.CsvMapper;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
-import org.apache.flink.streaming.api.datastream.KeyedStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.table.api.GroupedTable;
 import org.apache.flink.table.api.Table;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.types.Row;
@@ -47,7 +37,6 @@ import org.apache.flink.types.Row;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Properties;
-import java.util.function.Function;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.apache.flink.table.api.Expressions.$;
@@ -172,11 +161,10 @@ public class DataStreamJob {
                 ((float)tr.getField("price"))*((Integer)tr.getField("amount"))));
 
 
-        // send it to kafka        
         enrichedRecords.sinkTo(sink);
 
         /******************************************************************************************
-         * Executing the job
+         * Executing and printing the results
          ******************************************************************************************/
 
         // Execute program, beginning computation.
