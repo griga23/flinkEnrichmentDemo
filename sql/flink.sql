@@ -4,7 +4,7 @@ CREATE TABLE customers(
     email VARCHAR
 ) WITH (
     'connector' = 'filesystem',
-    'path' = '/Users/jsvoboda/Downloads/jans_notes/users.csv',
+    'path' = 'users.csv',
     'format' = 'csv'
 );
 
@@ -15,7 +15,7 @@ CREATE TABLE products(
     price FLOAT
 ) WITH (
     'connector' = 'filesystem',
-    'path' = '/Users/jsvoboda/Downloads/jans_notes/products.csv',
+    'path' = 'products.csv',
     'format' = 'csv'
 );
 
