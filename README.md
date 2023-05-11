@@ -15,6 +15,8 @@ Requirements:
   'scan.startup.mode' = 'earliest-offset'
 ```
 -running Flink on localhost (for Flink SQL) or running Flink runtime environment as jar (for Java)
+-Flink 1.17 can be downloaded here https://flink.apache.org/downloads/
+-or you can use this Docker https://github.com/confluentinc/learn-apache-flink-101-exercises
   
 Input:
 - Kafka Topic: "transactions"
