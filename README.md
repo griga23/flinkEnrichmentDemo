@@ -49,7 +49,7 @@ products.csv
 2003,dog,pets,249.99
 ```
 
-Sample Kafka Enriched Transaction:
+Sample Kafka Enriched Transaction (to be produced to the transactions topic):
 ```
 {
   "ts": "2023-04-06T17:45:14.857Z",
