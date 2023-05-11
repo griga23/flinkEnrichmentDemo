@@ -1,5 +1,21 @@
 # Flink Enrichment Demo
 
+Requirements:
+- running Kafka on localhost:9092 
+- if using CCloud you need to add your api key to the Kafka Connector configuration)
+```
+ 'connector' = 'kafka',
+  'topic' = 'transactions',
+  'value.format' = 'json',
+  'properties.group.id' = 'myGroup',
+  'properties.bootstrap.servers' = ‘********.aws.confluent.cloud:9092',
+  'properties.sasl.mechanism' = 'PLAIN',
+  'properties.security.protocol' = 'SASL_SSL',
+  'properties.sasl.jaas.config' = 'org.apache.kafka.common.security.plain.PlainLoginModule required username=“YourAPI Key password=“your’APISecret,
+  'scan.startup.mode' = 'earliest-offset'
+```
+-running Flink on localhost (for Flink SQL) or running Flink runtime environment as jar (for Java)
+  
 Input:
 - Kafka Topic: "transactions"
 - CSV file: users.csv
