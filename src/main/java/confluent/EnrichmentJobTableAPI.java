@@ -20,7 +20,6 @@ package confluent;
 
 import confluent.records.*;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
-import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.connector.file.src.FileSource;
 import org.apache.flink.connector.kafka.sink.KafkaSink;
 import org.apache.flink.connector.kafka.source.KafkaSource;
@@ -44,7 +43,7 @@ import static org.apache.flink.table.api.Expressions.$;
 /**
  * Skeleton for a Flink DataStream Job.
  */
-public class DataStreamJob {
+public class EnrichmentJobTableAPI {
 
     public static void main(String[] args) throws Exception {
 
@@ -109,14 +108,14 @@ public class DataStreamJob {
                         .build();
 
         /******************************************************************************************
-         * Creating Kafka data source
+         * Reading from Kafka data source
          ******************************************************************************************/
 
         DataStream<TransactionRecord> records =
                 env.fromSource(source, WatermarkStrategy.noWatermarks(), "Kafka Source");
 
         /******************************************************************************************
-         * Creating CSV data source
+         * Reading from CSV data source
          ******************************************************************************************/
 
          DataStreamSource<User> usersCSV =
@@ -130,7 +129,7 @@ public class DataStreamJob {
          * Processing begins...
          ******************************************************************************************/
 
-        // initiate tables from data streams
+        // initiate Tables from data streams
         Table transactionsTable = tEnv.fromDataStream(records);
         Table usersTable = tEnv.fromDataStream(usersCSV);
         Table productsTable = tEnv.fromDataStream(productCSV);
@@ -162,14 +161,15 @@ public class DataStreamJob {
 
 
         enrichedRecords.sinkTo(sink);
+        enrichedRecords.print();
 
         /******************************************************************************************
          * Executing and printing the results
          ******************************************************************************************/
 
+
         // Execute program, beginning computation.
         env.execute("Flink Java API Skeleton");
     }
-
 
 }
